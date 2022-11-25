@@ -1,0 +1,9 @@
+[Unit]
+Description=My test service
+After=multi-user.target
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /home/prem/Desktop/Nikki_verse/NikkiVersion4_5/NikkiVersion4_5.py
+[Install]
+WantedBy=multi-user.target
