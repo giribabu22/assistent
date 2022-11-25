@@ -340,8 +340,8 @@ class Nikki_functions_class():
 
     def NikkiTimetableOfMeeting(self):
         current_time = datetime.datetime.now()
-        eng.setProperty('volume', 2.0)
         if self.new_day != current_time.day:
+            eng.setProperty('volume', 2.0)
             self.NikkiSay('Hello boss, welcome back')
             self.NikkiGreatings()
             self.meeringMk = 0
@@ -352,10 +352,11 @@ class Nikki_functions_class():
         li12 = li12.split(':')
 
         if int(li12[0]) > 1 or int(li12[1]) > 3:
+            eng.setProperty('volume', 2.0)
             self.NikkiSay('you unlocked you laptop boss. what you want')
-
         if (current_time.strftime('%A') != 'Sunday'):
             if (current_time.hour == 10 and (current_time.minute >= 14 and current_time.minute <= 25 )) and self.meeringMk == 0 :
+                eng.setProperty('volume', 2.0)
                 self.NikkiSay('Boss, You have meeting with Meraki team you want to Join')
                 self.meeringMk = 1
                 self.NikkiSetGoogle('prem')
@@ -363,10 +364,10 @@ class Nikki_functions_class():
                 self.NikkiMute('sleep')
 
             elif (current_time.hour == 10 and (current_time.minute >= 39 and current_time.minute <= 44 )) and self.meetingEng == 0:
+                eng.setProperty('volume', 2.0)
                 self.NikkiSay('Boss, You have english meeting you want to Join')
                 self.NikkiSetGoogle('prem')
                 self.meetingEng = 1
                 self.NikkiMeeting('https://meet.google.com/kkj-djxf-usn')
                 self.NikkiMute('sleep')
-        eng.setProperty('volume',0)
         self.last_time = current_time
