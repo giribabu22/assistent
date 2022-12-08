@@ -1,11 +1,5 @@
-
-# 	nextButton[0].click()
-
-# 	print('Login Successful...!!')
-# except:
-# 	print('Login Failed')
-r = 1
-t = 0
-
-if (r or t):
-    print('true')
+rome_options = webdriver.ChromeOptions()
+# chrome_options.binary_location = '/snap/bin/brave'
+# chrome_options.add_argument('--remote-debugging-port=9222')
+# # chrome_options.add_argument("--headless")
+# driver = webdriver.Chrome(main_path+'chromedriver-sel/chromedriver',chrome_options= chrome_options)

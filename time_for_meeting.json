@@ -1,0 +1,17 @@
+{
+  "Meraki team ": {
+    "starting_time": "10:15",
+    "ending_time": "10:30",
+    "meeting_link": "https://meet.google.com/ksx-dxcx-ttf",
+    "status": false,
+    "message": "Check in meeting",
+    "run": "daily"
+  },
+  "English class": {
+    "starting_time": "10:39",
+    "ending_time": "12:10",
+    "meeting_link": "https://meet.google.com/kkj-djxf-usn",
+    "status": false,
+    "run": "daily"
+  }
+}
