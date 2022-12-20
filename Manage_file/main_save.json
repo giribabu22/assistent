@@ -1,7 +1,7 @@
 {
    "voice":{
-        "voice": "english_rp+f3",
-        "rate":130,
-        "volume":2.0
+        "voice_name": "english_rp+f4",
+        "rate":150,
+        "volume":1.0
     }
 }

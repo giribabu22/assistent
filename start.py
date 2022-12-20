@@ -29,29 +29,47 @@ voices   = eng.getProperty('voices')
 flag     = 'unmute'
 joke_nik = [['I invented a new word!Plagiarism!],[Did you hear about the mathematician who’s afraid of negative numbers?He’ll stop at nothing to avoid them.'],['Why do we tell actors to “break a leg?”Because every play has a cast. Here are some dark jokes to check out if you have a morbid sense of humor.'],['Helvetica and Times New Roman walk into a bar.“Get out of here!” shouts the bartender. “We don’t serve your type.”],[Yesterday I saw a guy spill all his Scrabble letters on the road. I asked him, “What’s the word on the street?”Once my dog ate all the Scrabble tiles. For days he kept leaving little messages around the house. Don’t miss these hilarious egg puns that will absolutely crack you up.'],['Knock! Knock! Who’s there? Control Freak. Con… OK, now you say, “Control Freak who?”' ],['Hear about the new restaurant called Karma? There’s no menu: You get what you deserve.'],['A woman in labor suddenly shouted, “Shouldn’t! Wouldn’t! Couldn’t! Didn’t! Can’t!”“Don’t worry,” said the doc. “Those are just contractions.”'],['A bear walks into a bar and says, “Give me a whiskey and … cola.” “Why the big pause?” asks the bartender. The bear shrugged. “I’m not sure; I was born with them.”'],['Did you hear about the actor who fell through the floorboards?He was just going through a stage.'],['Did you hear about the claustrophobic astronaut? He just needed a little space.'],['Why don’t scientists trust atoms? Because they make up everything.'],['Why did the chicken go to the séance?To get to the other side. Check out these other “why did the chicken cross the road?” jokes for more laughs.'],['Where are average things manufactured?The satisfactory.'],['How do you drown a hipster? Throw him in the mainstream.'],['What sits at the bottom of the sea and twitches?A nervous wreck.'],['What does a nosy pepper do? Gets jalapeño business!'],['How does Moses make tea? He brews.'],['Why can’t you explain puns to kleptomaniacs?They always take things literally.'],['How do you keep a bagel from getting away?Put lox on it.'],['A man tells his doctor, “Doc, help me. I’m addicted to Twitter!”The doctor replies, “Sorry, I don’t follow you …”']]
 
+with open('/home/prem/Desktop/my_code/Nikki_verse/NikkiVersion5/Manage_file/main_save.json','r') as f:
+    f2 =  json.loads(f.read())
+
+eng.setProperty('voice',f2['voice']['voice_name'])
+eng.setProperty('rate',f2['voice']['rate'] )
+eng.setProperty('volume', f2['voice']['volume'])
+
+# eng.setProperty('rate', 150)
+# eng.setProperty('volume', 1.5)
+# eng.setProperty('voice', 'english_rp+f4')
+
 try:
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = '/snap/bin/brave'
     chrome_options.add_argument('--remote-debugging-port=9000')
-    
+    eng.say('wait boss setting the browser it will take few seconds')
+    eng.runAndWait()
     driver = webdriver.Chrome(main_path+'chromedriver-sel/chromedriver',chrome_options= chrome_options)
-    call     = lib.Nikki_functions_class(driver,main_path) # object create 
+    call     = lib.Nikki_functions_class(driver,main_path,eng) # object create 
     # call2    =  lib2.accounts(driver)                                 # object create lib2 class
     driver.get(f'file://{main_path}/views/front_nikki.html')
     call.NikkiSetGoogle()
 except Exception as e:
     print('error')
+    pass
 
-    
+# f2['voice']['voice']
+# print(f2)
+# print(f2['voice'])
+# print(f2['voice']['voice_name'])
 
-eng.setProperty('voice', 'english_rp+f3')
-eng.setProperty('rate',130)
-eng.setProperty('volume', 1.0)
+
+# eng.setProperty('voice', 'english_rp+f3')
+# eng.setProperty('rate',130)
+# eng.setProperty('volume', 1.0)
 # eng.setProperty()
 
 while True:
     try:
         user_audio_text = call.NikkiVoiceSource()
+        print(user_audio_text)
         if 'Nikki' in user_audio_text or 'Ni' in user_audio_text or 'ok' in user_audio_text:
             call.NikkiWritingHistory(user_audio_text)
             if 'open class' in user_audio_text or 'dsc class' in user_audio_text or 'class time' in user_audio_text:
@@ -175,7 +193,7 @@ while True:
                 flag =  call.NikkiMute(user_audio_text,flag)
 
             else:
-                call.NikkiSay('i am still learning ')
+                call.NikkiSay('i am still learning new things ')
 
         elif user_audio_text == 'what is your name' or user_audio_text in 'your name':
             call.NikkiSay('hello my name is NIKKI by prem')
@@ -201,7 +219,7 @@ while True:
             call.NikkiSetGoogle(r)
             
         else:
-            call.NikkiSay('Boss, call my name ')
+            call.NikkiSay('Boss, tell my name Nikki')
         
     except sr.UnknownValueError:                              # call back code 
             eng.say('Could not understand audio')
@@ -238,18 +256,22 @@ while True:
             TrueFalse = True
             
     except Exception as e:
+        print(e)
         try:
             call.NikkiSay(f'oopes MAIN ERROR boss{e[0:130]}')
             if netError > 3:
                 call.NikkiFrontEnd()
                 netError +=1
         except:
+            print('error')
             chrome_options = webdriver.ChromeOptions()
             chrome_options.binary_location = '/snap/bin/brave'
             chrome_options.add_argument('--remote-debugging-port=9000')
-            
+            eng.say('Unexpected error came  dont worry Boss. i  am set it dont do any thing when i am doing something in browser. wait boss setting the browser it will take few seconds')
+            eng.runAndWait()
             driver = webdriver.Chrome(main_path+'chromedriver-sel/chromedriver',chrome_options= chrome_options)
-            call     = lib.Nikki_functions_class(driver,main_path) # object create 
+            call     = lib.Nikki_functions_class(driver,main_path,eng) # object create 
             # call2    =  lib2.accounts(driver)                                 # object create lib2 class
             driver.get(f'file://{main_path}/views/front_nikki.html')
+            call.NikkiSetGoogle()
     

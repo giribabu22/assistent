@@ -2,7 +2,7 @@ import os
 
 try:
     import speech_recognition as sr
-    import pyttsx3,time,random,json,requests,datetime
+    import time,random,json,requests,datetime
     from bs4 import BeautifulSoup as useMe
     from selenium.webdriver.support.wait import WebDriverWait
     from selenium.webdriver.common.keys import Keys
@@ -15,23 +15,20 @@ except ImportError:
     os.system('pip install selenium')
     os.system('pip install ib2to3')
     os.system('pip install speechRecognition')
-    os.system('pip install pyaudio')
-    os.system('pip install pyttsx3')
+    # os.system('pip install pyaudio')
+    # os.system('pip install pyttsx3')
 
 error    = 1
 netError = 0
-eng      = pyttsx3.init()
-voices   = eng.getProperty('voices')
+# eng      = pyttsx3.init()
+# voices   = eng.getProperty('voices')
 flag     = 'unmute'
 joke_nik = [['I invented a new word!Plagiarism!],[Did you hear about the mathematician who’s afraid of negative numbers?He’ll stop at nothing to avoid them.'],['Why do we tell actors to “break a leg?”Because every play has a cast. Here are some dark jokes to check out if you have a morbid sense of humor.'],['Helvetica and Times New Roman walk into a bar.“Get out of here!” shouts the bartender. “We don’t serve your type.”],[Yesterday I saw a guy spill all his Scrabble letters on the road. I asked him, “What’s the word on the street?”Once my dog ate all the Scrabble tiles. For days he kept leaving little messages around the house. Don’t miss these hilarious egg puns that will absolutely crack you up.'],['Knock! Knock! Who’s there? Control Freak. Con… OK, now you say, “Control Freak who?”' ],['Hear about the new restaurant called Karma? There’s no menu: You get what you deserve.'],['A woman in labor suddenly shouted, “Shouldn’t! Wouldn’t! Couldn’t! Didn’t! Can’t!”“Don’t worry,” said the doc. “Those are just contractions.”'],['A bear walks into a bar and says, “Give me a whiskey and … cola.” “Why the big pause?” asks the bartender. The bear shrugged. “I’m not sure; I was born with them.”'],['Did you hear about the actor who fell through the floorboards?He was just going through a stage.'],['Did you hear about the claustrophobic astronaut? He just needed a little space.'],['Why don’t scientists trust atoms? Because they make up everything.'],['Why did the chicken go to the séance?To get to the other side. Check out these other “why did the chicken cross the road?” jokes for more laughs.'],['Where are average things manufactured?The satisfactory.'],['How do you drown a hipster? Throw him in the mainstream.'],['What sits at the bottom of the sea and twitches?A nervous wreck.'],['What does a nosy pepper do? Gets jalapeño business!'],['How does Moses make tea? He brews.'],['Why can’t you explain puns to kleptomaniacs?They always take things literally.'],['How do you keep a bagel from getting away?Put lox on it.'],['A man tells his doctor, “Doc, help me. I’m addicted to Twitter!”The doctor replies, “Sorry, I don’t follow you …”']]
 
 
-eng.setProperty('voice', 'english_rp+f3')
-eng.setProperty('rate',130)
-eng.setProperty('volume', 1.0)
-
 class Nikki_functions_class():
-    def __init__(self,driver,main_path):
+    def __init__(self,driver,main_path,eng):
+        self.eng = eng
         self.driver = driver
         self.main_path = main_path
         self.f = open(f'{self.main_path}time_for_meeting.json')
@@ -44,8 +41,8 @@ class Nikki_functions_class():
 "Love the life you live.","Life is either a daring adventure or nothing at all"]
         
     def NikkiSay(self,data):
-        eng.say(data)
-        eng.runAndWait()
+        self.eng.say(data)
+        self.eng.runAndWait()
 
     def display_frontend(self):
         self.driver.get(f'file:///{self.main_path}views/front_nikki.html')
@@ -54,9 +51,9 @@ class Nikki_functions_class():
         self.NikkiAutoJoinMeeting()
         r = sr.Recognizer()                                                       
         with sr.Microphone() as source: 
-            eng.setProperty('rate',200)
+            self.eng.setProperty('rate',200)
             self.NikkiSay('Listening…')
-            eng.setProperty('rate',130)
+            self.eng.setProperty('rate',130)
             audio = r.listen(source,None,6) 
         return r.recognize_google(audio)
 
@@ -73,7 +70,7 @@ class Nikki_functions_class():
       WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[id='forTextarea']"))).send_keys("this is my first meet with the dlog bro nice to meet you bro")
     
     def NikkiPlaySong(self,song):
-        try:
+        # try:
             self.NikkiSay('ok boss ! wait i am opening youtube music ')
             self.driver.switch_to.new_window()
             self.driver.get(f'https://music.youtube.com/search?q={song}')
@@ -82,11 +79,11 @@ class Nikki_functions_class():
             # WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[class='ytp-ad-skip-button ytp-button']"))).click()
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "tp-yt-paper-icon-button[class='player-minimize-button style-scope ytmusic-player']"))).click()
             self.NikkiMute('sleep')
-        except:
-            self.NikkiSay('Boss, error in play song function')
+        # except:
+        #     self.NikkiSay('Boss, error in play song function')
 
     def NikkiYoutube(self,src_youtube):
-        try:
+        # try:
             self.NikkiSay('ok boss ! wait i am opening youtube')
             res = src_youtube.replace(' ','+')     
             self.driver.switch_to.new_window()
@@ -95,48 +92,61 @@ class Nikki_functions_class():
                 WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"yt-formatted-string[class ='style-scope ytd-video-renderer']"))).click()
             else:
                 self.driver.get(f'https://www.youtube.com/')
-        except:
-            self.NikkiSay('Boss, error in Nikki Youtube function.')
+        # except:
+        #     self.NikkiSay('Boss, error in Nikki Youtube function.')
 
     def NikkiBoring(self,r=True):
-        try:
-            list_play = ['telugu songs','ellie goulding','chaganti koteswara rao speeches mahabharatham etv','SriGarikipatiNarasimhaRaoOfficial','summer ball 2022']
-            
-            while r :
-                self.NikkiSay('if you want i will play something on youtube, News, book for read and movie for watch?')
-                ply = self.NikkiVoiceSource()
-                if 'YouTube' in ply:
-                    cho = random.choice(list_play)
-                    self.NikkiYoutube(cho)
-                    r = False
-                elif 'News' in ply :
-                    self.NikkiNewstoday()
-                    r = False
-                elif 'you play' in ply:
-                    res = ply.find('you play')+8
-                    self.NikkiYoutube(ply[res:])      
-                    r = False  
-                elif 'book' in ply:
-                    res = ply.find('book') + 9
-                    self.Nikkibook(ply[res:])
-                    r = False 
-                elif 'movie' in ply:
-                    self.Nikkibook('Boss, i am playing movie for you.')
-                    self.driver.get('https://ww16.ibomma.bar/telugu-movies')
-                    r = False 
-                else:
-                    r = True
-            return r
-        except:
-            self.NikkiSay('Boss, error in Boring function')
+            list_play = ['telugu songs','ellie goulding','chaganti koteswara rao speeches mahabharatham etv','SriGarikipatiNarasimhaRaoOfficial','summer ball 2022','']
+            c = 0
 
+            while r :
+                try:
+                    c+=1
+                    self.NikkiSay('if you want i will play something on youtube, News, book for read and movie for watch')
+                    ply = self.NikkiVoiceSource()
+                    if c > 3:
+                        r = False
+                    if 'YouTube' in ply:
+                        cho = random.choice(list_play)
+                        self.NikkiYoutube(cho)
+                        r = False
+                    elif 'News' in ply :
+                        self.NikkiNewstoday()
+                        r = False
+                    elif 'you play' in ply:
+                        res = ply.find('you play')+8
+                        self.NikkiYoutube(ply[res:])      
+                        r = False  
+                    elif 'movie' in ply:
+                        self.Nikkibook('Boss, i am playing movie for you.')
+                        self.driver.get('https://ww16.ibomma.bar/telugu-movies')
+                        r = False 
+                    elif 'book' in ply:
+                        res = ply.find('book') + 9
+                        self.Nikkibook(ply[res:])
+                        r = False 
+                    else:
+                        r = True
+                except sr.UnknownValueError:
+                    self.NikkiSay('Could not understand audio')
+                    print(c>3)
+                    if c > 3:
+                        r = False
+                    pass
+                except:
+                    pass
+            return r
 
     def NikkiFeelTalk(self):
         r = True
+        c2 =0
         while r:
             try:
+                c2 += 1
                 self.NikkiSay("what about you Boss ")
                 myans = self.NikkiVoiceSource()
+                if c2 > 3:
+                    r = False
                 if 'boring' in myans:
                     r = self.NikkiBoring(r)
                 elif 'fine' in myans or 'great' in myans:
@@ -146,13 +156,15 @@ class Nikki_functions_class():
                     self.NikkiSay('what you mean Boss!!')
             except sr.UnknownValueError:
                 self.NikkiSay('Could not understand audio')
+                if c2 > 3:
+                    r = False
                 pass
             except:
                 pass
 
 
     def NikkiGreatings(self):
-        try:
+        # try:
             t = datetime.datetime.now().hour
             res = 'good '
 
@@ -164,8 +176,8 @@ class Nikki_functions_class():
                 res = 'good evening'
 
             self.NikkiSay(f'{res}')
-        except:
-            self.NikkiSay('Boss, error in Greatings')
+        # except:
+        #     self.NikkiSay('Boss, error in Greatings')
 
     def NikkiWhoIs(self,user_audio_text):                              # this function help, to find the who is questions
         last_url = str(user_audio_text).replace(' ','+')
@@ -180,11 +192,9 @@ class Nikki_functions_class():
         if 'mute' in user_audio_text and len(user_audio_text) == 4 or user_audio_text[:5] == 'sleep':
             flag = 'mute'
             self.NikkiSay("i am mute But i am waiting for you boss")
-            eng.setProperty('volume', 0)
+            self.eng.setProperty('volume', 0)
         elif 'Unmute' in user_audio_text:
-            voices = eng.getProperty('voices')
-            eng.setProperty('voice', 'english_rp+f3')
-            eng.setProperty('volume', 1.0)
+            self.eng.setProperty('volume', 1.0)
             flag = 'Unmute'
             self.NikkiSay("i am unmute know")
         return flag
@@ -228,7 +238,7 @@ class Nikki_functions_class():
         self.NikkiSay(f'this is today news-paper {latestNews[r]}')
 
     def NikkiSearch(self,search_in): 
-        try:                                   # this function search anything in the browser
+        # try:                                   # this function search anything in the browser
             self.NikkiSay('ok boss i am opening google for you Boss')                                      
             self.driver.switch_to.new_window()
             self.driver.get('https://www.google.com/')
@@ -236,8 +246,8 @@ class Nikki_functions_class():
             src.clear()
             src.send_keys(search_in) 
             src.send_keys(Keys.ENTER)
-        except:
-            self.NikkiSay('error in Nikki google search')
+        # except:
+        #     self.NikkiSay('error in Nikki google search')
 
     def NikkiWeather(self,cloud):                                       # this function tell weather  
         url = f'https://www.google.com/search?q=weather+{cloud}'
@@ -251,10 +261,8 @@ class Nikki_functions_class():
 
     def NikkiCallBack(self,error,TrueFalse=True):
         user_audio_text = self.NikkiVoiceSource()
-        print(user_audio_text)
         if 'hello Nikki' in user_audio_text or 'are you there' in user_audio_text or 'hai Nikki' in user_audio_text or 'are there' in user_audio_text:
-            eng.setProperty('volume', 1.0)
-            eng.setProperty('voice', 'english_rp+f3')
+            self.eng.setProperty('volume', 1.0)
             self.NikkiSay('Hello boss i here for you ___')
             error = 1
             TrueFalse = False
@@ -262,9 +270,9 @@ class Nikki_functions_class():
         elif 'mute' in user_audio_text or 'Unmute' in user_audio_text :
             self.NikkiMute(user_audio_text)
             if 'Unmute' in user_audio_text:
-                eng.setProperty('volume', 1.0)
+                self.eng.setProperty('volume', 1.0)
                 self.NikkiSay('i am in sleep mood')
-                eng.setProperty('volume', 0)
+                self.eng.setProperty('volume', 0)
                 error=0
                 TrueFalse = True
                 
@@ -304,18 +312,18 @@ class Nikki_functions_class():
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,"div[class='VvrH3b']"))).click()
     
     def NikkiFrontEnd(self):
-        try:
+        # try:
             self.NikkiSay('wait boss setting the broser it will take few seconds')
             chrome_options = webdriver.ChromeOptions()
             chrome_options.binary_location = '/snap/bin/brave'
             chrome_options.add_argument('--remote-debugging-port=9224')
             self.driver = webdriver.Chrome(self.main_path+'chromedriver-sel/chromedriver',chrome_options= chrome_options)                
             self.driver.get(f'file://{self.main_path}views/front_nikki.html')
-        except:
-            self.NikkiSay('error in Nikki frontEnd')
+        # except:
+        #     self.NikkiSay('error in Nikki frontEnd')
 
     def NikkiWritingHistory(self,user_audio_text):
-        try:
+        # try:
             dic = {}
             with open(f'/{self.main_path}historyDataOfNikki/History_nikki.txt','r') as f:
                 f2 =  f.read()
@@ -342,8 +350,8 @@ class Nikki_functions_class():
                         newDict[k] = v
             with open(f'/{self.main_path}historyDataOfNikki/mostlyUseWords.json','w') as f1:
                 f1.write(json.dumps(newDict,indent = 3))
-        except:
-            self.NikkiSay('error in Nikki Writing History')
+        # except:
+        #     self.NikkiSay('error in Nikki Writing History')
 
     def NikkiMeeting(self,link):
 
@@ -360,7 +368,7 @@ class Nikki_functions_class():
     
     def NikkiSetGoogle(self,word ='Nikki'):
         if not(self.googleLog) :
-            try:  
+            # try:  
                 if ('Nikki' in word):
                     user = 'nikkiai048@gmail.com'
                     pin = 'nikki@630'
@@ -380,20 +388,22 @@ class Nikki_functions_class():
                 WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Next']"))).click()
                 
                 time.sleep(6)
-            except:
-                self.NikkiSay('Boss, Error in Set Google function.')
+            # except:
+            #     self.NikkiSay('Boss, Error in Set Google function.')
         else:
             self.NikkiSay('Boss, You already sign-in the google!')
 
     def NikkiAutoJoinMeeting(self):
+    
         current_time = datetime.datetime.now()
         if self.new_day != current_time.day:
-            eng.setProperty('volume', 1.0)
+            self.eng.setProperty('volume', 1.0)
             self.NikkiGreatings()
             g_mes = self.great_mes[random.randrange(0,len(self.great_mes)-1)]
+            
             if current_time.strftime('%A') == 'Sunday':
                 self.NikkiSay("Welcome Boss, Happy Sunday. Let this Sunday morning bring you lots of smiles, abd you’ll leave all of last week’s troubles behind you.")
-                eng.setProperty('volume',0)
+                self.eng.setProperty('volume',0)
             else:
                 self.NikkiSay(g_mes)
             self.meetingEng = 0
@@ -409,10 +419,11 @@ class Nikki_functions_class():
         li12 = li12.split(':')
 
         if int(li12[0]) > 1 or int(li12[1]) > 5:
-            eng.setProperty('volume', 1.0)
-            self.NikkiSay('Boss,Unlocked the laptop.')
-            eng.setProperty('volume',0)
-        if self.last_time.minute != current_time.minute: #https://doeslist.herokuapp.com/api/data
+            self.eng.setProperty('volume', 1.0)
+            self.NikkiSay(' I am activated. Boss ')
+            self.eng.setProperty('volume',0)
+            
+        if self.last_time.minute != current_time.minute: 
             with open(f'{self.main_path}time_for_meeting.json', "r") as file1:
                 self.time_table_data = json.load(file1)
 
@@ -427,15 +438,15 @@ class Nikki_functions_class():
                     elif (current_time.hour ==  int(ending_time[0]) and current_time.minute > int(ending_time[1])):
                         pass
                     elif (current_time.hour >= int(starting_time[0]) and current_time.hour <= int(ending_time[0])):
-                        eng.setProperty('volume', 1.0)                 
+                        self.eng.setProperty('volume', 1.0)                 
                         self.NikkiSay(f'Boss, You have {meet} meeting you want to Join')
                         self.NikkiSetGoogle('Prem')
                         self.googleLog = 1
                         if 'meeting_link' in self.time_table_data[meet]:
+                            self.NikkiMeeting(self.time_table_data[meet]['meeting_link'])
                             self.time_table_data[meet]['status'] = True 
                             with open(f'{self.main_path}time_for_meeting.json','w') as fil:
                                 fil.write(json.dumps(self.time_table_data,indent = 2))
-                            self.NikkiMeeting(self.time_table_data[meet]['meeting_link'])
                         self.NikkiMute('sleep')
                     
         self.last_time = current_time
