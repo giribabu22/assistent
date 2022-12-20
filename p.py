@@ -133,7 +133,12 @@ import pyttsx3
 # BOTNAME = config('BOTNAME')
 
 
-# engine = pyttsx3.init()
+# eng = pyttsx3.init()
+# eng.setProperty('voice', 'english+m4')
+# eng.setProperty('rate',174)
+# eng.setProperty('volume', 0.9)
+# eng.say('Hello nikki')
+# eng.runAndWait()
 # def change_voice(engine, language, gender='VoiceGenderFemale'):
 #     for voice in engine.getProperty('voices'):
 #         print(voice.languages,voice.gender)
@@ -174,8 +179,43 @@ import pyttsx3
 # # engine.setProperty('voice', voices[1].id)
 # engine.say('Hello world from ')
 # engine.runAndWait()
-import json,os
+# import json,os
 
-with open('/home/prem/Desktop/my_code/Nikki_verse/NikkiVersion5/Manage_file/main_save.json','r') as f:
-    f2 =  f.read()
-print(f2)
+# with open('/home/prem/Desktop/my_code/Nikki_verse/NikkiVersion5/Manage_file/main_save.json','r') as f:
+#     f2 =  f.read()
+# print(f2)
+
+# li = ['prem','giri']
+# if  'prm' in li:
+#     print('_')
+# import os
+# beep = lambda x: os.system("echo -n '\a';sleep 0.2;" * x)
+# beep(3)
+# import time
+# import sys
+# for i in range(1,6):
+#     sys.stdout.write('\r\a{i}'.format(i=i))
+#     sys.stdout.flush()
+#     time.sleep(1)
+# import os
+# os.system('say "your program has finished"')
+
+
+
+# # sys.stdout.write('\n')
+# import winsound
+
+# # Set frequency to 2000 Hertz
+# frequency = 2000
+
+# # Set duration to 1500 milliseconds (1.5 seconds)
+# duration = 1500
+
+# # Make beep sound on Windows
+# winsound.Beep(frequency, duration)
+from pyautogui import press, typewrite, hotkey
+
+press('SPACE')
+# typewrite('quick brown fox')   Keys.SPACE   .send_keys(Keys.SPACE)
+# hotkey('ctrl', 'w')
+

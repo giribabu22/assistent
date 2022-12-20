@@ -1,7 +1,8 @@
-{
-   "voice":{
-        "voice_name": "english_rp+f4",
-        "rate":150,
-        "volume":1.0
-    }
-}
+[
+   {
+      "voice": "english_rp+f4",
+      "rate": 154,
+      "volume": 0.6,
+      "name": "female"
+   }
+]
